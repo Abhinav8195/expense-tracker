@@ -4,9 +4,9 @@ export const GlobalContext = createContext(null);
 
 export default function GlobalState({ children }) {
   const [formData, setFormData] = useState({
-    type: "income",
-    amount: 0,
-    description: "",
+    type: "expense", // Set the initial type to 'expense'
+    amount: '',
+    description: '',
   });
 
   const [value, setValue] = useState("expense");
@@ -21,9 +21,15 @@ export default function GlobalState({ children }) {
       ...allTransactions,
       { ...currentFormData, id: Date.now() },
     ]);
-  }
 
-  console.log(allTransactions);
+    // Reset form data after submission
+    setFormData({
+      type: "expense", // Reset to default 'expense'
+      amount: '',
+      description: '',
+    });
+    setValue("expense"); // Reset the RadioGroup to default 'expense'
+  }
 
   return (
     <GlobalContext.Provider
